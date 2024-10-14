@@ -8,6 +8,10 @@ public class Nature extends Book{
         this.category = category;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
     @Override
     public void displayInfo() {
         super.displayInfo();

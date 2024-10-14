@@ -2,6 +2,8 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Library {
     private List<Book> books;
@@ -39,7 +41,7 @@ public class Library {
         if (books.contains(book)) {
             if (book.getQuantity() > 0) {
                 user.borrowBook(book);
-                book.changeAvailableQuantity(book, false);
+                book.changeAvailableQuantity(false);
             } else {
                 System.out.println("Book: " + book.getTitle() + " is not available");
             }
@@ -47,7 +49,7 @@ public class Library {
     }
     public void returnBook(User user, Book book) {
         if(!user.getBorrowedBooks().isEmpty()) {
-            book.changeAvailableQuantity(book, true);
+            book.changeAvailableQuantity(true);
             user.returnBook(book);
         } else {
             System.out.println(user.getFirstName() + " " + user.getLastName() + " didn't borrow " +
@@ -59,5 +61,13 @@ public class Library {
         for (Book book : books) {
             book.displayInfo();
         }
+    }
+
+    public List<Book> filterBooks(Predicate<Book> criteria) {
+        return books.stream().filter(criteria).collect(Collectors.toList());
+    }
+
+    public List<Book> getNatureBooks(String category) {
+        return filterBooks(book -> book instanceof Nature && ((Nature) book).getCategory().equalsIgnoreCase(category));
     }
 }

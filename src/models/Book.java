@@ -29,7 +29,7 @@ public class Book {
         return quantity;
     }
 
-    public void changeAvailableQuantity(Book book, boolean increase){
+    public void changeAvailableQuantity(boolean increase){
         if (quantity >= 0 && increase) {
             quantity++;
         }

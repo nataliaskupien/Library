@@ -1,5 +1,6 @@
 import models.*;
 
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -36,7 +37,19 @@ public class Main {
             int choice = scanner.nextInt();
 
             switch (choice) {
-                case 1 -> library.displayAvailableBooks();
+                case 1 -> {
+                    library.displayAvailableBooks();
+                    System.out.println("If you want to filter books by category insert: " +
+                                    "Nature, Historical or ScienceFiction :");
+                    scanner.nextLine();
+                    String category = scanner.nextLine();
+                    if (category.equals("Nature")) {
+                        List<Book> sorted = library.getNatureBooks(category);
+                        for (Book book : sorted) {
+                            book.displayInfo();
+                        }
+                    }
+                }
                 case 2 -> {
                     System.out.print("Enter book title to borrow: ");
                     scanner.nextLine();
