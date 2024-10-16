@@ -24,7 +24,6 @@ public class Library {
 
     public void addBook(Book book) {
         books.add(book);
-        System.out.println(book.getTitle() + " has been added to the library");
     }
 
     public void removeBook(Book book) {
@@ -68,6 +67,17 @@ public class Library {
     }
 
     public List<Book> getNatureBooks(String category) {
-        return filterBooks(book -> book instanceof Nature && ((Nature) book).getCategory().equalsIgnoreCase(category));
+        return filterBooks(book -> book instanceof Nature && ((Nature) book)
+                .getCategory().equalsIgnoreCase(category));
+    }
+
+    public List<Book> getHistoricalBooks(String category) {
+        return filterBooks(book -> book instanceof Historical && ((Historical) book)
+                .getCategory().equalsIgnoreCase(category));
+    }
+
+    public List<Book> getScienceFictionBooks(String category) {
+        return filterBooks(book -> book instanceof ScienceFiction && ((ScienceFiction)book)
+                .getCategory().equalsIgnoreCase(category));
     }
 }

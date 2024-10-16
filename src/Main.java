@@ -1,5 +1,6 @@
 import models.*;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,18 +30,18 @@ public class Main {
 
         while (running) {
             System.out.println("\nWelcome to the Library Menu");
-            System.out.println("1. Display available books");
-            System.out.println("2. Borrow book");
-            System.out.println("3. Return book");
-            System.out.println("4. Exit");
+            System.out.println("1. Display all available books");
+            System.out.println("2. Display books by category");
+            System.out.println("3. Borrow book");
+            System.out.println("4. Return book");
+            System.out.println("5. Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
 
             switch (choice) {
-                case 1 -> {
-                    library.displayAvailableBooks();
-                    System.out.println("If you want to filter books by category insert: " +
-                                    "Nature, Historical or ScienceFiction :");
+                case 1 -> library.displayAvailableBooks();
+                case 2 -> {
+                    System.out.println("Insert category (Nature/Historical/ScienceFiction: ");
                     scanner.nextLine();
                     String category = scanner.nextLine();
                     if (category.equals("Nature")) {
@@ -49,8 +50,22 @@ public class Main {
                             book.displayInfo();
                         }
                     }
+                    if (category.equals("Historical")) {
+                        List<Book> sorted = library.getHistoricalBooks(category);
+                        for (Book book : sorted) {
+                            book.displayInfo();
+                        }
+                    }
+                    if (category.equals("SF")) {
+                        List<Book> sorted = library.getScienceFictionBooks(category);
+                        for (Book book : sorted) {
+                            book.displayInfo();
+                        }
+                    }else {
+                        System.out.println("Wrong category try again");
+                    }
                 }
-                case 2 -> {
+                case 3 -> {
                     System.out.print("Enter book title to borrow: ");
                     scanner.nextLine();
                     String borrowTitle = scanner.nextLine();
@@ -60,7 +75,7 @@ public class Main {
                         }
                     }
                 }
-                case 3 -> {
+                case 4 -> {
                     System.out.print("Enter book title to return: ");
                     scanner.nextLine();
                     String returnTitle = scanner.nextLine();
@@ -70,7 +85,7 @@ public class Main {
                         }
                     }
                 }
-                case 4 -> {
+                case 5 -> {
                     running = false;
                     System.out.println("Exiting the library system. Goodbye!");
                 }
